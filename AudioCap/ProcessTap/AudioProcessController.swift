@@ -46,12 +46,11 @@ extension String: @retroactive LocalizedError {
 }
 
 @MainActor
-@Observable
-final class AudioProcessController {
+final class AudioProcessController: ObservableObject {
 
     private let logger = Logger(subsystem: kAppSubsystem, category: String(describing: AudioProcessController.self))
 
-    private(set) var processes = [AudioProcess]() {
+    @Published private(set) var processes = [AudioProcess]() {
         didSet {
             guard processes != oldValue else { return }
 
@@ -59,9 +58,9 @@ final class AudioProcessController {
         }
     }
 
-    private(set) var processGroups = [AudioProcessGroup]()
+    @Published private(set) var processGroups = [AudioProcessGroup]()
 
-    var isAnyAudioPlaying: Bool = false
+    @Published var isAnyAudioPlaying: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
 
