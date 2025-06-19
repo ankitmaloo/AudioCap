@@ -33,10 +33,9 @@ struct RecordingView: View {
             }
         } header: {
             HStack {
-                let systemAudioIcon = NSImage(systemSymbolName: "mic.circle.fill", accessibilityDescription: "System audio icon") ?? NSImage()
-                RecordingIndicator(appIcon: systemAudioIcon, isRecording: recorder.isRecording)
+                RecordingIndicator(appIcon: recorder.process.icon, isRecording: recorder.isRecording)
 
-                Text(recorder.isRecording ? "Recording System Audio" : "Ready to Record System Audio")
+                Text(recorder.isRecording ? "Recording from \(recorder.process.name)" : "Ready to Record from \(recorder.process.name)")
                     .font(.headline)
                     .contentTransition(.identity)
             }
