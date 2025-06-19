@@ -60,6 +60,8 @@ final class AudioProcessController {
     }
 
     private(set) var processGroups = [AudioProcessGroup]()
+    var isAnyAudioPlaying: Bool = false
+
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -92,7 +94,7 @@ final class AudioProcessController {
                     }
                     #endif
 
-                    return proc
+                    return proc.audioActive ? proc : nil // Filter: only return if audioActive is true
                 } catch {
                     logger.warning("Failed to initialize process with object ID #\(objectID, privacy: .public): \(error, privacy: .public)")
                     return nil
@@ -107,6 +109,8 @@ final class AudioProcessController {
                         $0.audioActive && !$1.audioActive ? true : false
                     }
                 }
+            self.isAnyAudioPlaying = !self.processes.isEmpty
+
         } catch {
             logger.error("Error reading process list: \(error, privacy: .public)")
         }
