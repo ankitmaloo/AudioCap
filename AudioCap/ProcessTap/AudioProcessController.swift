@@ -49,75 +49,77 @@ extension String: @retroactive LocalizedError {
 @Observable
 final class AudioProcessController {
 
-    private let logger = Logger(subsystem: kAppSubsystem, category: String(describing: AudioProcessController.self))
+    private let logger = Logger(subsystem: "AudioCap", category: String(describing: AudioProcessController.self))
 
-    private(set) var processes = [AudioProcess]() {
-        didSet {
-            guard processes != oldValue else { return }
-
-            processGroups = AudioProcessGroup.groups(with: processes)
-        }
-    }
-
-    private(set) var processGroups = [AudioProcessGroup]()
-    var isAnyAudioPlaying: Bool = false
-
-
+    private(set) var activeProcess: AudioProcess?
+    
+    // --- CHANGE 1: Add a property to track recording state ---
+    /// The view will set this to true when a recording starts.
+    var isRecording = false
+    
     private var cancellables = Set<AnyCancellable>()
 
     func activate() {
+        // ... (this function is unchanged)
         logger.debug(#function)
 
-        NSWorkspace.shared
-            .publisher(for: \.runningApplications, options: [.initial, .new])
-            .map { $0.filter({ $0.processIdentifier != ProcessInfo.processInfo.processIdentifier }) }
-            .sink { [weak self] apps in
-                guard let self else { return }
-                self.reload(apps: apps)
+        let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect().map { _ in }
+        let appPublisher = NSWorkspace.shared.publisher(for: \.runningApplications).map { _ in }
+
+        Publishers.Merge(timer, appPublisher)
+            .debounce(for: .seconds(0.2), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?.reload()
             }
             .store(in: &cancellables)
     }
+    
+    private func reload() {
+        // --- CHANGE 2: Add a guard to prevent reloading during recording ---
+        // If a recording is in progress, we exit immediately to avoid
+        // invalidating the current process and tap.
+        guard !isRecording else {
+            logger.debug("Reload skipped: Recording in progress.")
+            return
+        }
 
-    fileprivate func reload(apps: [NSRunningApplication]) {
         logger.debug(#function)
-
+        
         do {
+            let runningApps = NSWorkspace.shared.runningApplications.filter { $0.processIdentifier != ProcessInfo.processInfo.processIdentifier }
             let objectIdentifiers = try AudioObjectID.readProcessList()
-            
-            let updatedProcesses: [AudioProcess] = objectIdentifiers.compactMap { objectID in
+
+            let activeProcesses: [AudioProcess] = objectIdentifiers.compactMap { objectID in
                 do {
-                    let proc = try AudioProcess(objectID: objectID, runningApplications: apps)
-
-                    #if DEBUG
-                    if UserDefaults.standard.bool(forKey: "ACDumpProcessInfo") {
-                        logger.debug("[PROCESS] \(String(describing: proc))")
-                    }
-                    #endif
-
-                    return proc.audioActive ? proc : nil // Filter: only return if audioActive is true
+                    let proc = try AudioProcess(objectID: objectID, runningApplications: runningApps)
+                    return proc.audioActive ? proc : nil
                 } catch {
-                    logger.warning("Failed to initialize process with object ID #\(objectID, privacy: .public): \(error, privacy: .public)")
                     return nil
                 }
             }
 
-            self.processes = updatedProcesses
-                .sorted { // Keep processes with audio active always on top
-                    if $0.name.localizedStandardCompare($1.name) == .orderedAscending {
-                        $1.audioActive && !$0.audioActive ? false : true
-                    } else {
-                        $0.audioActive && !$1.audioActive ? true : false
-                    }
+            let sortedActiveProcesses = activeProcesses.sorted {
+                if $0.kind == .app && $1.kind == .process {
+                    return true
                 }
-            self.isAnyAudioPlaying = !self.processes.isEmpty
+                return $0.name.localizedStandardCompare($1.name) == .orderedAscending
+            }
+            
+            if self.activeProcess != sortedActiveProcesses.first {
+                 self.activeProcess = sortedActiveProcesses.first
+            }
 
         } catch {
             logger.error("Error reading process list: \(error, privacy: .public)")
+            if self.activeProcess != nil {
+                self.activeProcess = nil
+            }
         }
     }
-
 }
 
+
+// ... (all extensions and private helpers below this line are unchanged) ...
 private extension AudioProcess {
     init(app: NSRunningApplication, objectID: AudioObjectID) {
         let name = app.localizedName ?? app.bundleURL?.deletingPathExtension().lastPathComponent ?? app.bundleIdentifier?.components(separatedBy: ".").last ?? "Unknown \(app.processIdentifier)"
