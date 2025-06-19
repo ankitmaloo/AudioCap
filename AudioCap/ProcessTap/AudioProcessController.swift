@@ -61,6 +61,8 @@ final class AudioProcessController {
 
     private(set) var processGroups = [AudioProcessGroup]()
 
+    var isAnyAudioPlaying: Bool = false
+
     private var cancellables = Set<AnyCancellable>()
 
     func activate() {
@@ -108,6 +110,7 @@ final class AudioProcessController {
                         $0.audioActive && !$1.audioActive ? true : false
                     }
                 }
+            self.isAnyAudioPlaying = !self.processes.isEmpty
         } catch {
             logger.error("Error reading process list: \(error, privacy: .public)")
         }

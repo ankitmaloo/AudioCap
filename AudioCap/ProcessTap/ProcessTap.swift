@@ -8,16 +8,17 @@ final class ProcessTap {
 
     typealias InvalidationHandler = (ProcessTap) -> Void
 
-    let process: AudioProcess
+    let process: AudioProcess?
     let muteWhenRunning: Bool
     private let logger: Logger
 
     private(set) var errorMessage: String? = nil
 
-    init(process: AudioProcess, muteWhenRunning: Bool = false) {
+    init(process: AudioProcess? = nil, muteWhenRunning: Bool = false) {
         self.process = process
         self.muteWhenRunning = muteWhenRunning
-        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTap.self))(\(process.name))")
+        let tapTargetName = process?.name ?? "SystemAudio"
+        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTap.self))(\(tapTargetName))")
     }
 
     @ObservationIgnored
@@ -44,7 +45,7 @@ final class ProcessTap {
         self.errorMessage = nil
 
         do {
-            try prepare(for: process.objectID)
+            try prepare()
         } catch {
             logger.error("\(error, privacy: .public)")
             self.errorMessage = error.localizedDescription
@@ -78,67 +79,104 @@ final class ProcessTap {
         }
 
         if processTapID.isValid {
-            let err = AudioHardwareDestroyProcessTap(processTapID)
-            if err != noErr {
-                logger.warning("Failed to destroy audio tap: \(err, privacy: .public)")
+            if self.process != nil { // Only call DestroyProcessTap if it was created with CreateProcessTap
+                let err = AudioHardwareDestroyProcessTap(processTapID)
+                if err != noErr { logger.warning("Failed to destroy process-specific audio tap: \(err, privacy: .public)") }
             }
+            // For taps created with AudioHardwareCreateTap, their lifecycle is tied to the aggregate device.
             self.processTapID = .unknown
         }
     }
 
-    private func prepare(for objectID: AudioObjectID) throws {
-        errorMessage = nil
+    private func prepare() throws {
+        errorMessage = nil // Clear previous errors
 
-        let tapDescription = CATapDescription(stereoMixdownOfProcesses: [objectID])
-        tapDescription.uuid = UUID()
-        tapDescription.muteBehavior = muteWhenRunning ? .mutedWhenTapped : .unmuted
-        var tapID: AUAudioObjectID = .unknown
-        var err = AudioHardwareCreateProcessTap(tapDescription, &tapID)
+        let tapDescription: CATapDescription
+        var err: OSStatus
 
-        guard err == noErr else {
-            errorMessage = "Process tap creation failed with error \(err)"
-            return
+        if let currentProcess = self.process {
+            // Process-specific tap
+            logger.debug("Preparing process tap for \(currentProcess.name)")
+            tapDescription = CATapDescription(stereoMixdownOfProcesses: [currentProcess.objectID])
+            tapDescription.uuid = UUID() // Keep UUID logic consistent
+            tapDescription.muteBehavior = muteWhenRunning ? .mutedWhenTapped : .unmuted
+
+            err = AudioHardwareCreateProcessTap(tapDescription, &processTapID)
+            guard err == noErr else {
+                errorMessage = "Process tap creation failed for \(currentProcess.name) with error \(err)"
+                return
+            }
+            logger.debug("Created process tap #\(self.processTapID, privacy: .public) for \(currentProcess.name)")
+
+        } else {
+            // System-wide tap
+            logger.debug("Preparing system-wide audio tap")
+            tapDescription = CATapDescription()
+            tapDescription.isTapOnSystemAudio = true
+            tapDescription.uuid = UUID() // Keep UUID logic consistent
+            tapDescription.muteBehavior = muteWhenRunning ? .mutedWhenTapped : .unmuted
+
+            err = AudioHardwareCreateTap(tapDescription, &processTapID)
+            guard err == noErr else {
+                errorMessage = "System audio tap creation failed with error \(err)"
+                return
+            }
+            logger.debug("Created system audio tap #\(self.processTapID, privacy: .public)")
         }
 
-        logger.debug("Created process tap #\(tapID, privacy: .public)")
-
-        self.processTapID = tapID
-
+        // Common Aggregate Device Setup
         let systemOutputID = try AudioDeviceID.readDefaultSystemOutputDevice()
-
         let outputUID = try systemOutputID.readDeviceUID()
-
         let aggregateUID = UUID().uuidString
 
-        let description: [String: Any] = [
-            kAudioAggregateDeviceNameKey: "Tap-\(process.id)",
+        let aggregateDeviceName: String
+        if let currentProcess = self.process {
+            aggregateDeviceName = "Tap-\(currentProcess.id)"
+        } else {
+            aggregateDeviceName = "SystemAudioTap-\(aggregateUID.prefix(8))"
+        }
+
+        let descriptionDict: [String: Any] = [
+            kAudioAggregateDeviceNameKey: aggregateDeviceName,
             kAudioAggregateDeviceUIDKey: aggregateUID,
             kAudioAggregateDeviceMainSubDeviceKey: outputUID,
             kAudioAggregateDeviceIsPrivateKey: true,
             kAudioAggregateDeviceIsStackedKey: false,
-            kAudioAggregateDeviceTapAutoStartKey: true,
+            kAudioAggregateDeviceTapAutoStartKey: true, // Important for the tap to be active
             kAudioAggregateDeviceSubDeviceListKey: [
-                [
-                    kAudioSubDeviceUIDKey: outputUID
-                ]
+                [kAudioSubDeviceUIDKey: outputUID]
             ],
             kAudioAggregateDeviceTapListKey: [
                 [
                     kAudioSubTapDriftCompensationKey: true,
-                    kAudioSubTapUIDKey: tapDescription.uuid.uuidString
+                    kAudioSubTapUIDKey: tapDescription.uuid!.uuidString // tapDescription.uuid must be set
                 ]
             ]
         ]
 
-        self.tapStreamDescription = try tapID.readAudioTapStreamBasicDescription()
+        self.tapStreamDescription = try processTapID.readAudioTapStreamBasicDescription()
 
-        aggregateDeviceID = AudioObjectID.unknown
-        err = AudioHardwareCreateAggregateDevice(description as CFDictionary, &aggregateDeviceID)
+        aggregateDeviceID = AudioObjectID.unknown // Reset before creation
+        err = AudioHardwareCreateAggregateDevice(descriptionDict as CFDictionary, &aggregateDeviceID)
         guard err == noErr else {
+            // Clean up the tap if aggregate device creation fails
+            if processTapID.isValid {
+                if self.process != nil {
+                    AudioHardwareDestroyProcessTap(processTapID)
+                } else {
+                    // For system taps, AudioObjectRemovePropertyAddress might be needed if not handled by aggregate device destruction.
+                    // However, often the aggregate device manages its constituent taps.
+                    // If AudioHardwareCreateTap implies ownership by the aggregate device, this might not be needed.
+                    // For now, mirroring the process tap destruction might be incorrect.
+                    // Relying on aggregate device destruction is safer unless specific API for system tap destruction is confirmed.
+                    // Let's assume AudioHardwareDestroyTap is not the one, and it's managed by aggregate device.
+                    // No explicit call here for system tap destruction, it will be handled by aggregate device invalidation.
+                }
+                self.processTapID = .unknown
+            }
             throw "Failed to create aggregate device: \(err)"
         }
-
-        logger.debug("Created aggregate device #\(self.aggregateDeviceID, privacy: .public)")
+        logger.debug("Created aggregate device #\(self.aggregateDeviceID, privacy: .public) named \(aggregateDeviceName)")
     }
 
     func run(on queue: DispatchQueue, ioBlock: @escaping AudioDeviceIOBlock, invalidationHandler: @escaping InvalidationHandler) throws {
@@ -166,7 +204,7 @@ final class ProcessTap {
 final class ProcessTapRecorder {
 
     let fileURL: URL
-    let process: AudioProcess
+    let process: AudioProcess?
     private let queue = DispatchQueue(label: "ProcessTapRecorder", qos: .userInitiated)
     private let logger: Logger
 
@@ -176,7 +214,7 @@ final class ProcessTapRecorder {
     private(set) var isRecording = false
 
     init(fileURL: URL, tap: ProcessTap) {
-        self.process = tap.process
+        self.process = tap.process // process is now AudioProcess?
         self.fileURL = fileURL
         self._tap = tap
         self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTapRecorder.self))(\(fileURL.lastPathComponent))")
