@@ -8,16 +8,14 @@ final class ProcessTap {
 
     typealias InvalidationHandler = (ProcessTap) -> Void
 
-    let process: AudioProcess
     let muteWhenRunning: Bool
     private let logger: Logger
 
     private(set) var errorMessage: String? = nil
 
-    init(process: AudioProcess, muteWhenRunning: Bool = false) {
-        self.process = process
+    init(muteWhenRunning: Bool = false) {
         self.muteWhenRunning = muteWhenRunning
-        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTap.self))(\(process.name))")
+        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTap.self))(SystemAudio)")
     }
 
     @ObservationIgnored
@@ -44,7 +42,7 @@ final class ProcessTap {
         self.errorMessage = nil
 
         do {
-            try prepare(for: process.objectID)
+            try prepare()
         } catch {
             logger.error("\(error, privacy: .public)")
             self.errorMessage = error.localizedDescription
@@ -86,17 +84,18 @@ final class ProcessTap {
         }
     }
 
-    private func prepare(for objectID: AudioObjectID) throws {
+    private func prepare() throws {
         errorMessage = nil
 
-        let tapDescription = CATapDescription(stereoMixdownOfProcesses: [objectID])
-        tapDescription.uuid = UUID()
-        tapDescription.muteBehavior = muteWhenRunning ? .mutedWhenTapped : .unmuted
+        let tapDescription = CATapDescription()
+        tapDescription.isTapOnSystemAudio = true
+        tapDescription.uuid = UUID() // Keep this if needed
+        tapDescription.muteBehavior = muteWhenRunning ? .mutedWhenTapped : .unmuted // Keep this
         var tapID: AUAudioObjectID = .unknown
-        var err = AudioHardwareCreateProcessTap(tapDescription, &tapID)
+        var err = AudioHardwareCreateTap(tapDescription, &tapID)
 
         guard err == noErr else {
-            errorMessage = "Process tap creation failed with error \(err)"
+            errorMessage = "System audio tap creation failed with error \(err)"
             return
         }
 
@@ -111,7 +110,7 @@ final class ProcessTap {
         let aggregateUID = UUID().uuidString
 
         let description: [String: Any] = [
-            kAudioAggregateDeviceNameKey: "Tap-\(process.id)",
+            kAudioAggregateDeviceNameKey: "SystemTap-\(UUID().uuidString.prefix(4))",
             kAudioAggregateDeviceUIDKey: aggregateUID,
             kAudioAggregateDeviceMainSubDeviceKey: outputUID,
             kAudioAggregateDeviceIsPrivateKey: true,
@@ -166,7 +165,6 @@ final class ProcessTap {
 final class ProcessTapRecorder {
 
     let fileURL: URL
-    let process: AudioProcess
     private let queue = DispatchQueue(label: "ProcessTapRecorder", qos: .userInitiated)
     private let logger: Logger
 
@@ -176,10 +174,9 @@ final class ProcessTapRecorder {
     private(set) var isRecording = false
 
     init(fileURL: URL, tap: ProcessTap) {
-        self.process = tap.process
         self.fileURL = fileURL
         self._tap = tap
-        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTapRecorder.self))(\(fileURL.lastPathComponent))")
+        self.logger = Logger(subsystem: kAppSubsystem, category: "\(String(describing: ProcessTapRecorder.self))(\(fileURL.lastPathComponent))(SystemAudio)")
     }
 
     private var tap: ProcessTap {
