@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F50000022C00000000000000 /* SystemRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50000012C00000000000000 /* SystemRecordingView.swift */; };
 		F431728D2BF68C0C00D918A3 /* AudioRecordingPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */; };
 		F43172922BF6ABB000D918A3 /* ProcessSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */; };
 		F43172942BF6B01000D918A3 /* ProcessTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172932BF6B01000D918A3 /* ProcessTap.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F50000012C00000000000000 /* SystemRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRecordingView.swift; sourceTree = "<group>"; };
 		F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingPermission.swift; sourceTree = "<group>"; };
 		F431728E2BF691D900D918A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessSelectionView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				F431729F2BF7BD4700D918A3 /* ProcessTap */,
 				F47AD9412BF5B61E005B75AC /* AudioCapApp.swift */,
 				F47AD9432BF5B61E005B75AC /* RootView.swift */,
+				F50000012C00000000000000 /* SystemRecordingView.swift */,
 				F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */,
 				F43172992BF7A51A00D918A3 /* RecordingView.swift */,
 				F431729B2BF7B66A00D918A3 /* FileProxyView.swift */,
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F50000022C00000000000000 /* SystemRecordingView.swift in Sources */,
 				F43172942BF6B01000D918A3 /* ProcessTap.swift in Sources */,
 				F43172922BF6ABB000D918A3 /* ProcessSelectionView.swift in Sources */,
 				F47AD9442BF5B61E005B75AC /* RootView.swift in Sources */,
