@@ -5,7 +5,8 @@ struct RootView: View {
     @State private var permission = AudioRecordingPermission()
 
     var body: some View {
-        Form {
+        // Change Form to VStack and remove the style modifier
+        VStack(spacing: 15) {
             switch permission.status {
             case .unknown:
                 requestPermissionView
@@ -15,9 +16,10 @@ struct RootView: View {
                 permissionDeniedView
             }
         }
-        .formStyle(.grouped)
+        .padding() // Add some padding around the whole view
     }
-
+    
+    // The rest of the file (your @ViewBuilder properties) remains the same.
     @ViewBuilder
     private var requestPermissionView: some View {
         LabeledContent("Please Allow Audio Recording") {
@@ -42,6 +44,7 @@ struct RootView: View {
     }
 }
 
+// ... (NSWorkspace extension remains the same) ...
 extension NSWorkspace {
     func openSystemSettings() {
         guard let url = urlForApplication(withBundleIdentifier: "com.apple.systempreferences") else {

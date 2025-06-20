@@ -8,49 +8,47 @@ struct ProcessSelectionView: View {
     @State private var recorder: ProcessTapRecorder?
 
     var body: some View {
-        Section {
-            if let activeProcess = processController.activeProcess {
-                if let tap {
-                    if let errorMessage = tap.errorMessage {
-                        Text(errorMessage)
-                            .font(.headline)
-                            .foregroundStyle(.red)
-                    } else if let recorder {
-                        RecordingView(recorder: recorder)
-                            // --- THIS IS THE KEY CHANGE ---
-                            .onChange(of: recorder.isRecording) { wasRecording, isRecording in
-                                // Inform the controller about the recording status change.
-                                // This will "pause" and "resume" the reload timer.
-                                processController.isRecording = isRecording
-
-                                // If recording just finished, create a new recorder for the next session.
-                                if wasRecording, !isRecording {
-                                    createRecorder(for: activeProcess)
-                                }
+        // The Section has been removed. We use a VStack for structure.
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Source")
+                        .font(.headline)
+                    
+                    if let activeProcess = processController.activeProcess {
+                        // This logic remains the same
+                        if let tap {
+                            if let errorMessage = tap.errorMessage {
+                                Text(errorMessage)
+                                    .font(.headline)
+                                    .foregroundStyle(.red)
+                            } else if let recorder {
+                                RecordingView(recorder: recorder)
+                                    .onChange(of: recorder.isRecording) { wasRecording, isRecording in
+                                        processController.isRecording = isRecording
+                                        if wasRecording, !isRecording {
+                                            createRecorder(for: activeProcess)
+                                        }
+                                    }
                             }
+                        }
+                    } else {
+                        Text("Waiting for an application to play audio...")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center) // Center the waiting text
                     }
                 }
-            } else {
-                Text("Waiting for an application to play audio...")
-                    .foregroundStyle(.secondary)
-            }
-        } header: {
-            Text("Source")
-                .font(.headline)
-        }
-        .task {
-            processController.activate()
-        }
-        .onChange(of: processController.activeProcess) { oldValue, newValue in
-            guard newValue != oldValue else { return }
+                .task {
+                    processController.activate()
+                }
+                .onChange(of: processController.activeProcess) { oldValue, newValue in
+                    guard newValue != oldValue else { return }
 
-            if let newValue {
-                setupRecording(for: newValue)
-            } else {
-                teardownTap()
+                    if let newValue {
+                        setupRecording(for: newValue)
+                    } else {
+                        teardownTap()
+                    }
+                }
             }
-        }
-    }
 
     private func setupRecording(for process: AudioProcess) {
         let newTap = ProcessTap(process: process)
