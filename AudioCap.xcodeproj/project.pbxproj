@@ -22,6 +22,9 @@
 		F47AD9442BF5B61E005B75AC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47AD9432BF5B61E005B75AC /* RootView.swift */; };
 		F47AD9462BF5B61F005B75AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47AD9452BF5B61F005B75AC /* Assets.xcassets */; };
 		F47AD9492BF5B61F005B75AC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47AD9482BF5B61F005B75AC /* Preview Assets.xcassets */; };
+		BC5CD7C62E10F38D00B4E3B6 /* AudioDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */; };
+		BC5CD7C72E10F38D00B4E3B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */; };
+		BC5CD7C82E10F38D00B4E3B6 /* Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		F47AD9452BF5B61F005B75AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F47AD9482BF5B61F005B75AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F47AD94A2BF5B61F005B75AC /* AudioCap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioCap.entitlements; sourceTree = "<group>"; };
+		BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetectionView.swift; sourceTree = "<group>"; };
+		BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gemini.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,9 @@
 				F47AD9452BF5B61F005B75AC /* Assets.xcassets */,
 				F47AD94A2BF5B61F005B75AC /* AudioCap.entitlements */,
 				F47AD9472BF5B61F005B75AC /* Preview Content */,
+				BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */,
+				BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */,
+				BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */,
 			);
 			path = AudioCap;
 			sourceTree = "<group>";
@@ -205,6 +214,9 @@
 				F43172A12BF7BF1300D918A3 /* RecordingIndicator.swift in Sources */,
 				F43172962BF787C300D918A3 /* CoreAudioUtils.swift in Sources */,
 				F431729C2BF7B66A00D918A3 /* FileProxyView.swift in Sources */,
+				BC5CD7C62E10F38D00B4E3B6 /* AudioDetectionView.swift in Sources */,
+				BC5CD7C72E10F38D00B4E3B6 /* Extensions.swift in Sources */,
+				BC5CD7C82E10F38D00B4E3B6 /* Gemini.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

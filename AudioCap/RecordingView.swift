@@ -3,6 +3,8 @@ import SwiftUI
 @MainActor
 struct RecordingView: View {
     let recorder: ProcessTapRecorder
+    @EnvironmentObject private var notesManager: NotesManager
+    @State private var isProcessing = false
 
     @State private var lastRecordingURL: URL?
 
@@ -25,11 +27,18 @@ struct RecordingView: View {
                             .transition(.scale.combined(with: .opacity))
                     }
                 }
+                if isProcessing {
+                    ProgressView()
+                        .padding(.leading)
+                }
             }
             .animation(.smooth, value: recorder.isRecording)
             .animation(.smooth, value: lastRecordingURL)
             .onChange(of: recorder.isRecording) { _, newValue in
-                if !newValue { lastRecordingURL = recorder.fileURL }
+                if !newValue {
+                    lastRecordingURL = recorder.fileURL
+                    processRecording(url: recorder.fileURL)
+                }
             }
         } header: {
             HStack {
@@ -39,6 +48,23 @@ struct RecordingView: View {
                     .font(.headline)
                     .contentTransition(.identity)
             }
+        }
+    }
+
+    private func processRecording(url: URL) {
+        isProcessing = true
+        Task {
+            do {
+                let gemini = Gemini(apiKey: "YOUR_API_KEY") // Replace with your actual API key
+                let transcription = try await gemini.transcribe(audioURL: url)
+                let todos = try await gemini.extractTodos(from: transcription)
+
+                notesManager.updateNote(url: url, transcription: transcription, todos: todos)
+
+            } catch {
+                print("Error processing recording: \(error)")
+            }
+            isProcessing = false
         }
     }
 

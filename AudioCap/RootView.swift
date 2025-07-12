@@ -3,6 +3,7 @@ import SwiftUI
 @MainActor
 struct RootView: View {
     @State private var permission = AudioRecordingPermission()
+    @StateObject private var notesManager = NotesManager()
 
     var body: some View {
         // Change Form to VStack and remove the style modifier
@@ -17,6 +18,7 @@ struct RootView: View {
             }
         }
         .padding() // Add some padding around the whole view
+        .environmentObject(notesManager)
     }
     
     // The rest of the file (your @ViewBuilder properties) remains the same.

@@ -52,6 +52,7 @@ final class AudioProcessController {
     private let logger = Logger(subsystem: "AudioCap", category: String(describing: AudioProcessController.self))
 
     private(set) var activeProcess: AudioProcess?
+    var isAnyAudioPlaying = false
     
     // --- CHANGE 1: Add a property to track recording state ---
     /// The view will set this to true when a recording starts.
@@ -108,6 +109,7 @@ final class AudioProcessController {
             if self.activeProcess != sortedActiveProcesses.first {
                  self.activeProcess = sortedActiveProcesses.first
             }
+            self.isAnyAudioPlaying = !sortedActiveProcesses.isEmpty
 
         } catch {
             logger.error("Error reading process list: \(error, privacy: .public)")

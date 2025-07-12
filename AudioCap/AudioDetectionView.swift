@@ -101,7 +101,8 @@ struct AudioDetectionView: View {
     private func setupAndStartRecording() {
         recordingError = nil
         // 1. Setup ProcessTap for system audio
-        let tap = ProcessTap(process: <#AudioProcess#>, muteWhenRunning: false) // System tap, muteWhenRunning can be preference
+        let systemAudioProcess = AudioProcess(id: 0, kind: .process, name: "System Audio", audioActive: true, objectID: 0)
+        let tap = ProcessTap(process: systemAudioProcess, muteWhenRunning: false) // System tap, muteWhenRunning can be preference
         tap.activate()
 
         if let tapError = tap.errorMessage {
