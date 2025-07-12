@@ -40,7 +40,16 @@ struct RootView: View {
 
     @ViewBuilder
     private var recordingView: some View {
-        ProcessSelectionView()
+        TabView {
+            NotesView()
+                .tabItem {
+                    Label("Notes", systemImage: "note.text")
+                }
+            ProcessSelectionView()
+                .tabItem {
+                    Label("Record", systemImage: "mic.fill")
+                }
+        }
     }
 }
 

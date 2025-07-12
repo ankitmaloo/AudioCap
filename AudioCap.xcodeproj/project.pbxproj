@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC5CD7C32E10F38D00B4E3B6 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C02E10F38D00B4E3B6 /* Note.swift */; };
+		BC5CD7C42E10F38D00B4E3B6 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C22E10F38D00B4E3B6 /* NotesView.swift */; };
+		BC5CD7C52E10F38D00B4E3B6 /* NotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C12E10F38D00B4E3B6 /* NotesManager.swift */; };
 		F431728D2BF68C0C00D918A3 /* AudioRecordingPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */; };
 		F43172902BF6A92900D918A3 /* AudioProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F431728F2BF6A92900D918A3 /* AudioProcessController.swift */; };
 		F43172922BF6ABB000D918A3 /* ProcessSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC5CD7C02E10F38D00B4E3B6 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		BC5CD7C12E10F38D00B4E3B6 /* NotesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesManager.swift; sourceTree = "<group>"; };
+		BC5CD7C22E10F38D00B4E3B6 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingPermission.swift; sourceTree = "<group>"; };
 		F431728E2BF691D900D918A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F431728F2BF6A92900D918A3 /* AudioProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProcessController.swift; sourceTree = "<group>"; };
@@ -93,6 +99,9 @@
 				F431729F2BF7BD4700D918A3 /* ProcessTap */,
 				F47AD9412BF5B61E005B75AC /* AudioCapApp.swift */,
 				F47AD9432BF5B61E005B75AC /* RootView.swift */,
+				BC5CD7C02E10F38D00B4E3B6 /* Note.swift */,
+				BC5CD7C22E10F38D00B4E3B6 /* NotesView.swift */,
+				BC5CD7C12E10F38D00B4E3B6 /* NotesManager.swift */,
 				F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */,
 				F43172992BF7A51A00D918A3 /* RecordingView.swift */,
 				F431729B2BF7B66A00D918A3 /* FileProxyView.swift */,
@@ -186,6 +195,9 @@
 				F43172902BF6A92900D918A3 /* AudioProcessController.swift in Sources */,
 				F43172942BF6B01000D918A3 /* ProcessTap.swift in Sources */,
 				F43172922BF6ABB000D918A3 /* ProcessSelectionView.swift in Sources */,
+				BC5CD7C32E10F38D00B4E3B6 /* Note.swift in Sources */,
+				BC5CD7C42E10F38D00B4E3B6 /* NotesView.swift in Sources */,
+				BC5CD7C52E10F38D00B4E3B6 /* NotesManager.swift in Sources */,
 				F47AD9442BF5B61E005B75AC /* RootView.swift in Sources */,
 				F47AD9422BF5B61E005B75AC /* AudioCapApp.swift in Sources */,
 				F431728D2BF68C0C00D918A3 /* AudioRecordingPermission.swift in Sources */,
