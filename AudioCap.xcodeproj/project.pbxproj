@@ -12,6 +12,7 @@
 		BC5CD7C52E10F38D00B4E3B6 /* NotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C12E10F38D00B4E3B6 /* NotesManager.swift */; };
 		F431728D2BF68C0C00D918A3 /* AudioRecordingPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */; };
 		F43172902BF6A92900D918A3 /* AudioProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F431728F2BF6A92900D918A3 /* AudioProcessController.swift */; };
+		BC5CD7CE2E10F38D00B4E3B6 /* AudioCapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CF2E10F38D00B4E3B6 /* AudioCapService.swift */; };
 		F43172922BF6ABB000D918A3 /* ProcessSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */; };
 		F43172942BF6B01000D918A3 /* ProcessTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172932BF6B01000D918A3 /* ProcessTap.swift */; };
 		F43172962BF787C300D918A3 /* CoreAudioUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43172952BF787C300D918A3 /* CoreAudioUtils.swift */; };
@@ -35,6 +36,7 @@
 		F431728C2BF68C0C00D918A3 /* AudioRecordingPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingPermission.swift; sourceTree = "<group>"; };
 		F431728E2BF691D900D918A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F431728F2BF6A92900D918A3 /* AudioProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProcessController.swift; sourceTree = "<group>"; };
+		BC5CD7CF2E10F38D00B4E3B6 /* AudioCapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapService.swift; sourceTree = "<group>"; };
 		F43172912BF6ABB000D918A3 /* ProcessSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessSelectionView.swift; sourceTree = "<group>"; };
 		F43172932BF6B01000D918A3 /* ProcessTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessTap.swift; sourceTree = "<group>"; };
 		F43172952BF787C300D918A3 /* CoreAudioUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAudioUtils.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				F431729D2BF7BB0600D918A3 /* Config */,
 				F431729F2BF7BD4700D918A3 /* ProcessTap */,
 				F47AD9412BF5B61E005B75AC /* AudioCapApp.swift */,
+				BC5CD7CF2E10F38D00B4E3B6 /* AudioCapService.swift */,
 				F47AD9432BF5B61E005B75AC /* RootView.swift */,
 				BC5CD7C02E10F38D00B4E3B6 /* Note.swift */,
 				BC5CD7C22E10F38D00B4E3B6 /* NotesView.swift */,
@@ -211,6 +214,7 @@
 				BC5CD7C42E10F38D00B4E3B6 /* NotesView.swift in Sources */,
 				BC5CD7C52E10F38D00B4E3B6 /* NotesManager.swift in Sources */,
 				F47AD9442BF5B61E005B75AC /* RootView.swift in Sources */,
+				BC5CD7CE2E10F38D00B4E3B6 /* AudioCapService.swift in Sources */,
 				F47AD9422BF5B61E005B75AC /* AudioCapApp.swift in Sources */,
 				F431728D2BF68C0C00D918A3 /* AudioRecordingPermission.swift in Sources */,
 				F431729A2BF7A51A00D918A3 /* RecordingView.swift in Sources */,
@@ -220,6 +224,7 @@
 				BC5CD7C62E10F38D00B4E3B6 /* AudioDetectionView.swift in Sources */,
 				BC5CD7C72E10F38D00B4E3B6 /* Extensions.swift in Sources */,
 				BC5CD7C82E10F38D00B4E3B6 /* Gemini.swift in Sources */,
+				BC5CD7CD2E10F38D00B4E3B6 /* APIKeyInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
