@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/master.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.derived/runner.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/runner.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/runner.swiftdeps"
+  }
+}

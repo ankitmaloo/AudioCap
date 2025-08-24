@@ -1,0 +1,4 @@
+module AudioCapService {
+    header "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioCapService-Swift.h"
+    requires objc
+}

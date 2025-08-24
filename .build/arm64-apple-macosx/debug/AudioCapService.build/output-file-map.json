@@ -1,0 +1,41 @@
+{
+  "": {
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/master.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/AudioCapService.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioCapService.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioCapService.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioCapService~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioCapService.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/AudioProcessController.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioProcessController.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioProcessController.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioProcessController~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioProcessController.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/AudioRecordingPermission.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioRecordingPermission.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioRecordingPermission.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioRecordingPermission~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/AudioRecordingPermission.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/Constants.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/Constants.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/Constants.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/Constants~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/Constants.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/CoreAudioUtils.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/CoreAudioUtils.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/CoreAudioUtils.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/CoreAudioUtils~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/CoreAudioUtils.swiftdeps"
+  },
+  "/Users/ankit/Documents/dev/c/AudioCap/Sources/AudioCapService/ProcessTap.swift": {
+    "dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/ProcessTap.d",
+    "object": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/ProcessTap.swift.o",
+    "swiftmodule": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/ProcessTap~partial.swiftmodule",
+    "swift-dependencies": "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapService.build/ProcessTap.swiftdeps"
+  }
+}

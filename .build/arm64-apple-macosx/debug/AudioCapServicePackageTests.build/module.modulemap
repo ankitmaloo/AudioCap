@@ -1,0 +1,4 @@
+module AudioCapServicePackageTests {
+    header "/Users/ankit/Documents/dev/c/AudioCap/.build/arm64-apple-macosx/debug/AudioCapServicePackageTests.build/AudioCapServicePackageTests-Swift.h"
+    requires objc
+}
