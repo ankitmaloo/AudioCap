@@ -25,6 +25,7 @@
 		BC5CD7C62E10F38D00B4E3B6 /* AudioDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */; };
 		BC5CD7C72E10F38D00B4E3B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */; };
 		BC5CD7C82E10F38D00B4E3B6 /* Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */; };
+		BC5CD7CD2E10F38D00B4E3B6 /* APIKeyInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5CD7CC2E10F38D00B4E3B6 /* APIKeyInputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetectionView.swift; sourceTree = "<group>"; };
 		BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gemini.swift; sourceTree = "<group>"; };
+		BC5CD7CC2E10F38D00B4E3B6 /* APIKeyInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyInputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				BC5CD7C92E10F38D00B4E3B6 /* AudioDetectionView.swift */,
 				BC5CD7CA2E10F38D00B4E3B6 /* Extensions.swift */,
 				BC5CD7CB2E10F38D00B4E3B6 /* Gemini.swift */,
+				BC5CD7CC2E10F38D00B4E3B6 /* APIKeyInputView.swift */,
 			);
 			path = AudioCap;
 			sourceTree = "<group>";

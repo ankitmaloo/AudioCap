@@ -5,6 +5,7 @@ struct RecordingView: View {
     let recorder: ProcessTapRecorder
     @EnvironmentObject private var notesManager: NotesManager
     @State private var isProcessing = false
+    @AppStorage("geminiAPIKey") private var geminiAPIKey: String = ""
 
     @State private var lastRecordingURL: URL?
 
@@ -55,7 +56,12 @@ struct RecordingView: View {
         isProcessing = true
         Task {
             do {
-                let gemini = Gemini(apiKey: "YOUR_API_KEY") // Replace with your actual API key
+                guard !geminiAPIKey.isEmpty else {
+                    print("Gemini API Key is not set.")
+                    isProcessing = false
+                    return
+                }
+                let gemini = Gemini(apiKey: geminiAPIKey) // Replace with your actual API key
                 let transcription = try await gemini.transcribe(audioURL: url)
                 let todos = try await gemini.extractTodos(from: transcription)
 
